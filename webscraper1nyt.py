@@ -5,7 +5,7 @@ import requests
 import feedparser
 import json
 
-# Create the file inwhich to store the
+# Create the file inwhich to store the content
 article_content = open('article1.json', 'w')
 
 
@@ -34,7 +34,7 @@ article_title = article_title.rstrip(' - The New York Times')
 
 article1['Title'] = article_title
 
-# print(article1['Title'])
+
 
 
 ########Extract article_authors
