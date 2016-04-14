@@ -37,37 +37,23 @@ def get_content_nyt(article_request):
         article_text += part.get_text()
     return article_text
 
-
-
-
-
-
-def main():
-    article_content = open('webscrapertwo.json', 'w')
-
-    # Create the file inwhich to store the
-
+##### NYT webscraper function
+def nyt(query_subject):
     links = []
-
-    article_holder = {'Title' : '' , 'Authors' : [], 'Text' : '', 'Date' : '', 'Publication' : 'New York Times'}
-
-    subject = input("what do you want to look up? ")
-    for url in search_news(subject + ' site:https://www.nytimes.com', stop = 5):
+    for url in search_news(query_subject + ' site:https://www.nytimes.com', stop = 5):
         links.append(url)
 
-    # x = len(links)
     target_article = []
-
 
     for link in links:
         try:
             target_article.append(requests.get(link))
-            # print(article_link)
+
         except requests.exceptions.ConnectionError:
             print('something messed up')
 
 
-    y = 0
+    # y = 0
 
     for request in target_article:
         article = {'Title' : '' , 'Authors' : [], 'Text' : '', 'Date' : '', 'Publication' : 'New York Times'}
@@ -76,44 +62,34 @@ def main():
         article['Authors'] = get_authors_nyt(request)
         article['Text'] = get_content_nyt(request)
 
-        json.dump(article, article_content, indent=4)
 
-    print('\n')
-    print('\n')
-    print('\n')
+        return  article
 
 
+
+def main():
+    article_content = open('webscraperthree.json', 'w')
+
+    # Create the file inwhich to store the
+
+    article_holder = {'Title' : '' , 'Authors' : [], 'Text' : '', 'Date' : '', 'Publication' : 'New York Times'}
+
+    subject = input("what do you want to look up? ")
+    articles_nyt = nyt(subject)   ##where we call NYT webscraper function and put it into a dict with other NYT content
+
+    json.dump(articles_nyt, article_content, indent=4)
+
+
+
+
+########################## THIS IS WHERE WE RUN MAIN ###########################
 main()
+################################################################################
 
 
 
 
-#
-# try:
-#     target_site = requests.get(links[2])
-# except requests.exceptions.ConnectionError:
-#     print('something messed up')
-#
-#
-# title = soup.find('title')
-# body = soup.find('body')
-# print(title.text)
-
-
-
-
-# gs = GoogleSearch("Bacon")
-# for hit in gs.top_results():
-#     print(hit)
-
-
-
-
-
-
-
-print('\n')
 
 ########Writing article1 information to json
-json.dump(article_holder, article_content, indent=4)
+# json.dump(article_holder, article_content, indent=4)
 # print(article1)
