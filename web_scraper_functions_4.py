@@ -396,6 +396,40 @@ def get_content_cbs(article_request):
 
     return article_text
 
+def get_authors_cbs(article_request):
+    authors_cbs =''
+    article_soup = BeautifulSoup(article_request.text,'html.parser')
+
+    try:
+        authors_cbs = article_soup.find('span', {'class' : 'author'}).get_text()
+    except:
+        print(ops)
+
+    return authors_cbs
+
+def get_title_cbs(article_request):
+    title_cbs =''
+    article_soup = BeautifulSoup(article_request.text,'html.parser')
+
+    try:
+        title_cbs = article_soup.find('h1', {'itemprop' : 'headline'}).get_text()
+    except:
+        print(ops)
+
+    return title_cbs
+
+def get_date_cbs(article_request):
+    date_cbs =''
+    article_soup = BeautifulSoup(article_request.text,'html.parser')
+
+    try:
+        date_cbs = article_soup.find('span', {'class' : 'time'}).get_text()
+    except:
+        print(ops)
+
+    return date_cbs
+
+
 def cbs(query_subject):
     links = []
 
@@ -419,7 +453,9 @@ def cbs(query_subject):
         article = {'Title' : '' , 'Authors' : [], 'Text' : '', 'Date' : '', 'Publication' : 'CBS News'}
 
         article['Text'] = get_content_cbs(request)
-
+        article['Date'] = get_date_cbs(request)
+        article['Authors'] = get_authors_cbs(request)
+        article['Title'] = get_title_cbs(request)
         article_list.append(article)
 
     return  article_list
