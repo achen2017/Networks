@@ -68,3 +68,46 @@ def nyt(query_subject):
         article_list.append(article)
 
     return  article_list
+
+
+
+
+############################    ABC News Functions
+def get_content_abc(article_request):
+    article_text=''
+    article_soup = BeautifulSoup(article_request.text,'html.parser')
+
+    for part in article_soup.find_all('p', {"itemprop" : 'articleBody'}):
+        article_text += part.get_text()
+    return article_text
+
+
+##### ABC webscraper function
+def abc(query_subject):
+    links = []
+    for url in search_news(query_subject + ' site:http://www.abcnews.com', stop = 5):
+        links.append(url)
+
+    article_list = []
+    target_article = []
+
+    for link in links:
+        try:
+            target_article.append(requests.get(link))
+
+        except requests.exceptions.ConnectionError:
+            print('something messed up')
+
+
+
+
+    for request in target_article:
+        article = {'Title' : '' , 'Authors' : [], 'Text' : '', 'Date' : '', 'Publication' : 'ABC News'}
+
+        # article['Title'] = get_title_abc(request)
+        # article['Authors'] = get_authors_abc(request)
+        article['Text'] = get_content_abc(request)
+
+        article_list.append(article)
+
+    return  article_list
