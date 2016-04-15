@@ -1,13 +1,17 @@
+##testing2
 
+import bs4
 from bs4 import BeautifulSoup
 import requests
+
 import json
 import time
 from google import search
 from google import search_news
 from google import get_page
 from random import randint
-from web_scraper_functions_4 import nyt, abc, cnn, nbc, hp, cbs
+from web_scraper_functions_5 import nyt, abc, cnn
+
 
 
 def main():
@@ -21,7 +25,7 @@ def main():
     # articles_nyt = nyt(subject)   ##where we call NYT webscraper function and put it into a dict with other NYT content
     # articles_abc = abc(subject)
     article_dump = []
-    article_dump.extend(abc(subject) + nyt(subject) + cnn(subject) + nbc(subject) + hp(subject) + cbs(subject))
+    article_dump.extend(abc(subject) + nyt(subject) + cnn(subject))
 
 
 
