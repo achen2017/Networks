@@ -1,11 +1,14 @@
-##testing
+##testing2
 
 import bs4
 import requests
 import feedparser
 import json
 
-# Create the file inwhich to store the
+from bs4 import BeautifulSoup
+
+
+# Create the file inwhich to store the content
 article_content = open('article1.json', 'w')
 
 
@@ -34,7 +37,7 @@ article_title = article_title.rstrip(' - The New York Times')
 
 article1['Title'] = article_title
 
-# print(article1['Title'])
+
 
 
 ########Extract article_authors
@@ -61,27 +64,10 @@ article_text_semisplit = []
 article_text_split = []
 article_text_whole = []
 
-article_text_rough = target_article.text.split('<p class="story-body-text story-content" data-para-count="')
+article_text_rough = BeautifulSoup(target_article.text, 'html.parser')
+bill_the_goat = article_text_rough.getText()
+print(bill_the_goat)
 
-article_text_rough.pop(0)
-
-
-####this isn't set up correctly because if ''<dsfds><sdfsdf>text text text" then it will delete the text.
-for text_paragrapha in article_text_rough:
-    text_paragrapha = text_paragrapha.split('>')
-    article_text_semisplit.extend(text_paragrapha)
-
-
-
-for text_paragraphb in article_text_semisplit:
-    text_paragraphb = text_paragraphb.split('<')
-    article_text_split.extend(text_paragraphb)
-
-
-print(article_text_split)
-
-
-# del article_text_split[0::2]
 
 
 
