@@ -21,9 +21,22 @@ def main():
     # articles_nyt = nyt(subject)   ##where we call NYT webscraper function and put it into a dict with other NYT content
     # articles_abc = abc(subject)
     article_dump = []
-    article_dump.extend(abc(subject) + nyt(subject) + cnn(subject) + nbc(subject) + hp(subject) + cbs(subject))
 
+    abc_list = abc(subject)
+    nyt_list = nyt(subject)
+    cnn_list = cnn(subject)
+    nbc_list = nbc(subject)
+    hp_list = hp(subject)
+    cbs_list = cbs(subject)
 
+    article_dump.extend(abc_list + nyt_list + cnn_list + nbc_list + hp_list + cbs_list)
+
+    print('number of ABC articles collected : ' + str(len(abc_list)))
+    print('number of New York Times articles collected : ' + str(len(nyt_list)))
+    print('number of CNN articles collected : ' + str(len(cnn_list)))
+    print('number of NBC articles collected : ' + str(len(nbc_list)))
+    print('number of Huffington Post articles collected : ' + str(len(hp_list)))
+    print('number of CBS articles collected : ' + str(len(cbs_list)))
 
     json.dump(article_dump, article_content, indent=4)
 
