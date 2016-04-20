@@ -7,6 +7,8 @@ from google import search
 from google import search_news
 from google import get_page
 from random import randint
+from nltk.corpus import stopwords
+import re
 
 ops = 'ops'
 def rando():
@@ -14,30 +16,52 @@ def rando():
     return rando_num
 
 
+def wordlist(article_text):
+    letters_only = re.sub("[^a-zA-Z]", " ", article_text)
+    lower_case = letters_only.lower()
+    full_wordset = lower_case.split(' ')
+    article_words = [w for w in full_wordset if w not in stopwords.words("english") and w not in ['', ' ']]
+    return article_words
+
+
+
+
+
+
 ########Extract article_title
 def get_title_nyt(article_request):
     article_soup = BeautifulSoup(article_request.text,'html.parser')
+    article_title = ''
     try:
         article_title = article_soup.find("h1", {"class" : 'headline'}).text
     except AttributeError:
-        article_title = article_soup.find("h1", {"itemprop" : 'headline'}).text
+        print(ops)
     return article_title
 
 ########Extract article_authors
 def get_authors_nyt(article_request):
-    article_author = article_request.text.split('<meta name="author" content="')
-    article_author = article_author[1]
-    article_author = article_author.split('" />')
-    article_author = article_author[0]
-
+    article_soup = BeautifulSoup(article_request.text,'html.parser')
+    article_author = ''
+    try:
+        article_author = article_soup.find("span", {"class" : 'byline_author'}).text
+    except AttributeError:
+        print(ops)
     return article_author
 
 
 def get_content_nyt(article_request):
-    article_text = ''
     article_soup = BeautifulSoup(article_request.text,'html.parser')
-    for part in article_soup.find_all("p", {"class" : 'story-body-text story-content'}):
-        article_text += part.get_text()
+    article_text = ''
+
+    try:
+        for item in article_soup.find_all("p", {"class" : 'story-body-text story-content'}):
+            article_text += item.text
+
+        # article_text= article_soup.find("div", {"class" : 'story-body'}).text
+    except AttributeError:
+        print(ops)
+
+
     return article_text
 
 ##### NYT webscraper function
@@ -60,11 +84,11 @@ def nyt(query_subject):
 
 
     for request in target_article:
-        article = {'Title' : '' , 'Authors' : [], 'Text' : '', 'Date' : '', 'Publication' : 'New York Times'}
+        article = {'Title' : '' , 'Authors' : [], 'Text' : [], 'Date' : '', 'Publication' : 'New York Times'}
 
         article['Title'] = get_title_nyt(request)
         article['Authors'] = get_authors_nyt(request)
-        article['Text'] = get_content_nyt(request)
+        article['Text'] = wordlist(get_content_nyt(request))
 
         article_list.append(article)
 
@@ -79,15 +103,40 @@ def get_content_abc(article_request):
     article_soup = BeautifulSoup(article_request.text,'html.parser')
 
     for part in article_soup.find_all('p', {"itemprop" : 'articleBody'}):
-        article_text += part.get_text()
+        try:
+            article_text += part.get_text()
+        except:
+            print(ops)
     return article_text
 
 def get_title_abc(article_request):
     article_soup = BeautifulSoup(article_request.text,'html.parser')
-
-    article_title = article_soup.find('header', {"class" : 'article-header'}).h1.get_text()
+    article_title = ''
+    try:
+        article_title = article_soup.find('header', {"class" : 'article-header'}).h1.get_text()
+    except:
+        print(ops)
 
     return article_title
+
+def get_date_abc(article_request):
+    article_soup = BeautifulSoup(article_request.text,'html.parser')
+    date_abc = ''
+
+    try:
+        date_abc = article_soup.find('span', {"class" : 'timestamp'}).get_text()
+    except:
+        print(ops)
+    return date_abc
+
+def get_authors_abc(article_request):
+    article_soup = BeautifulSoup(article_request.text,'html.parser')
+    authors_abc = ''
+    try:
+        authors_abc = article_soup.find('ul', {"class" : 'authors'}).get_text()
+    except:
+        print(ops)
+    return authors_abc
 
 
 ##### ABC webscraper function
@@ -110,12 +159,12 @@ def abc(query_subject):
 
 
     for request in target_article:
-        article = {'Title' : '' , 'Authors' : [], 'Text' : '', 'Date' : '', 'Publication' : 'ABC News'}
+        article = {'Title' : '' , 'Authors' : [], 'Text' : [], 'Date' : '', 'Publication' : 'ABC News'}
 
-        article['Text'] = get_content_abc(request)
+        article['Text'] = wordlist(get_content_abc(request))
         article['Title'] = get_title_abc(request)
-        article['Date'] = BeautifulSoup(request.text,'html.parser').find('span', {"class" : 'timestamp'}).get_text()
-        article['Authors'] = BeautifulSoup(request.text,'html.parser').find('ul', {"class" : 'authors'}).get_text()
+        article['Date'] = get_date_abc(request)
+        article['Authors'] = get_authors_abc(request)
 
         article_list.append(article)
 
@@ -195,9 +244,9 @@ def cnn(query_subject):
 
 
     for request in target_article:
-        article = {'Title' : '' , 'Authors' : [], 'Text' : '', 'Date' : '', 'Publication' : 'CNN'}
+        article = {'Title' : '' , 'Authors' : [], 'Text' : [], 'Date' : '', 'Publication' : 'CNN'}
 
-        article['Text'] = get_content_cnn(request)
+        article['Text'] = wordlist(get_content_cnn(request))
         article['Title'] = get_title_cnn(request)
         article['Date'] = get_date_cnn(request)
         article['Authors'] = get_authors_cnn(request)
@@ -278,9 +327,9 @@ def nbc(query_subject):
 
 
     for request in target_article:
-        article = {'Title' : '' , 'Authors' : [], 'Text' : '', 'Date' : '', 'Publication' : 'NBC'}
+        article = {'Title' : '' , 'Authors' : [], 'Text' : [], 'Date' : '', 'Publication' : 'NBC'}
 
-        article['Text'] = get_content_nbc(request)
+        article['Text'] = wordlist(get_content_nbc(request))
         article['Title'] = get_title_nbc(request)
         article['Date'] = get_date_nbc(request)
         article['Authors'] = get_authors_nbc(request)
@@ -362,9 +411,9 @@ def hp(query_subject):
 
 
     for request in target_article:
-        article = {'Title' : '' , 'Authors' : [], 'Text' : '', 'Date' : '', 'Publication' : 'Huffington Post'}
+        article = {'Title' : '' , 'Authors' : [], 'Text' : [], 'Date' : '', 'Publication' : 'Huffington Post'}
 
-        article['Text'] = get_content_hp(request)
+        article['Text'] = wordlist(get_content_hp(request))
         article['Title'] = get_title_hp(request)
         article['Date'] = get_date_hp(request)
         article['Authors'] = get_authors_hp(request)
@@ -450,9 +499,9 @@ def cbs(query_subject):
 
 
     for request in target_article:
-        article = {'Title' : '' , 'Authors' : [], 'Text' : '', 'Date' : '', 'Publication' : 'CBS News'}
+        article = {'Title' : '' , 'Authors' : [], 'Text' : [], 'Date' : '', 'Publication' : 'CBS News'}
 
-        article['Text'] = get_content_cbs(request)
+        article['Text'] = wordlist(get_content_cbs(request))
         article['Date'] = get_date_cbs(request)
         article['Authors'] = get_authors_cbs(request)
         article['Title'] = get_title_cbs(request)
