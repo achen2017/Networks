@@ -67,7 +67,7 @@ def get_content_nyt(article_request):
 ##### NYT webscraper function
 def nyt(query_subject):
     links = []
-    for url in search_news(query_subject + ' site:https://www.nytimes.com', pause = rando(), stop = 5):
+    for url in search_news(query_subject + ' site:https://www.nytimes.com', pause = rando(), stop = 20):
         links.append(url)
 
     article_list = []
@@ -142,7 +142,7 @@ def get_authors_abc(article_request):
 ##### ABC webscraper function
 def abc(query_subject):
     links = []
-    for url in search_news(query_subject + ' site:http://www.abcnews.com',  pause = rando(), stop = 5):
+    for url in search_news(query_subject + ' site:http://www.abcnews.com',  pause = rando(), stop = 20):
         links.append(url)
 
     article_list = []
@@ -227,7 +227,7 @@ def cnn(query_subject):
 
 #################   ##################   ########
 #################   ##################   ########
-    for url in search_news(query_subject + ' site:http://www.cnn.com/',  pause = rando(), stop = 5):
+    for url in search_news(query_subject + ' site:http://www.cnn.com/',  pause = rando(), stop = 20):
         links.append(url)
 
     article_list = []
@@ -312,7 +312,7 @@ def nbc(query_subject):
 
     #################   ##################   ########
     #################   ##################   ########
-    for url in search_news(query_subject + ' site:http://www.nbcnews.com',  pause = rando(), stop = 5):
+    for url in search_news(query_subject + ' site:http://www.nbcnews.com',  pause = rando(), stop = 20):
         links.append(url)
 
     article_list = []
@@ -396,7 +396,7 @@ def hp(query_subject):
     links = []
 
 
-    for url in search_news(query_subject + ' site:http://www.huffingtonpost.com',  pause = rando(), stop = 5):
+    for url in search_news(query_subject + ' site:http://www.huffingtonpost.com',  pause = rando(), stop = 20):
         links.append(url)
 
     article_list = []
@@ -484,7 +484,7 @@ def cbs(query_subject):
 
 #################   ##################   ########
 #################   ##################   ########
-    for url in search_news(query_subject + ' site:http://www.cbsnews.com',  pause = rando(), stop = 5):
+    for url in search_news(query_subject + ' site:http://www.cbsnews.com',  pause = rando(), stop = 20):
         links.append(url)
 
     article_list = []
