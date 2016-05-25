@@ -1,0 +1,23 @@
+<div class="page-header">
+  <h1>Query Page <% @queries.each do |query| %>
+  <h1><%= query.try(name) %></h1>
+    <% end %></h1>
+</div>
+
+<form class="form-horizontal" action="http://localhost:3000/start_query">
+  <!-- Label and input for title -->
+  <div class="form-group">
+    <label for="query" class="col-sm-2 control-label">
+      Query
+    </label>
+    <div class="col-sm-10">
+      <input type="text" id="query" name="query" placeholder="Query" class="form-control">
+    </div>
+  </div>
+
+
+
+</form>
+<% @queries.each do |query| %>
+<h1><%= query.try(name) %></h1>
+  <% end %>

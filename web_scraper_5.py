@@ -21,7 +21,7 @@ def main():
     date = time.strftime("%d_%m_%Y")
     the_time = time.strftime("%H_%M_%S")
     article_content = open(subject + '_on_' + date + '_at_' + the_time + '.json', 'w')
-
+    art_cont_name = str(subject + '_on_' + date + '_at_' + the_time + '.json')
     # Create the file inwhich to store the
 
     article_holder = {'Title' : '' , 'Authors' : [], 'Text' : '', 'Date' : '', 'Publication' : 'New York Times'}
@@ -49,7 +49,7 @@ def main():
 
     json.dump(article_dump, article_content, indent=4)
 
-    network_main(subject, date, the_time)
+    network_main(subject, art_cont_name)
 
 
 

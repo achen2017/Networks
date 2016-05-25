@@ -155,18 +155,18 @@ class Big:
         myfile.close
 
 
-def network_main(data_json, date, the_time):
+def network_main(subject, article_dump):
     # data_json = "vr.json"
 
-    file_name = str(data_json.split('.')[0])  # this is future file name
+    file_name = subject  # this is future file name
     numb_most = 500   #sets how many words go into the network. It can definitely handle 500
 
     # infomap_command = "../packages/Infomap/Infomap temporary_folder/another_test.net temporary_folder/ -N 10 --tree --bftree" ### #change we have to change the paths used here
 
     infomap_command = "../packages/Infomap/Infomap temporary_folder/" + file_name + ".net temporary_folder/ -N 10 --tree" ### #change we have to change the paths used here
 
-    with open(subject + '_on_' + date + '_at_' + the_time + '.json', 'r') as wfile: # this is file pulled
-        article_dump = json.load(wfile)
+    # with open(art_cont_name, 'r') as wfile: # this is file pulled
+        # article_dump = json.load(wfile)
 
     makemydir()
 
