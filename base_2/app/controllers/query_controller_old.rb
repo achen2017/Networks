@@ -18,7 +18,7 @@ class QueryController < ApplicationController
     # @query = Query.new
 
 
-    
+
     if Query.maximum(:id).class == NilClass
       @latest_id = '0'
     else

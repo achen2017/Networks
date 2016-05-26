@@ -11,22 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160525002323) do
+ActiveRecord::Schema.define(version: 20160526042618) do
 
   create_table "data", force: :cascade do |t|
+    #counter
     t.integer  "query_id"
-    t.string   "module"
     t.string   "word"
+    t.string   "module"
+    t.integer  "freq"
+    t.decimal  "flow"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "queries", force: :cascade do |t|
-    t.string   "name"
-    t.text     "description"
-    t.text     "info"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.string   "query"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

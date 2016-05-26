@@ -1,6 +1,7 @@
 class QueryController < ApplicationController
   def index
     @queries = Query.all
+    @data = Datum.all
     # @latest_id = Query.order(:created_at desc, :limit => 1)
     # @latest_id = Query.find(:order => "created_at", :limit => 1)
 
@@ -14,24 +15,20 @@ class QueryController < ApplicationController
   def create_row
 
 
+    @query = Query.new
+    @query.query = params[:query]
+    @query.save
 
-    # @query = Query.new
-
-
-
-    if Query.maximum(:id).class == NilClass
+    if Datum.maximum(:id).class == NilClass
       @latest_id = '0'
     else
-      @latest_id = Query.maximum(:id).to_s
+      @latest_id = Datum.maximum(:id).to_s
     end
 
+    a = Query.maximum(:id).to_s
     # system('python python_old/web_scraper_5.py ' + params[:query] + " " + @latest_id)
-    system('python python/web_scraper_5.py ' + params[:query] + ' ' + @latest_id)
+    system('python python/web_scraper_5.py ' + params[:query] + ' ' + @latest_id + ' ' + a)
     # system('python python/web_scraper_5.py ' + params[:query] + ' 1')
-
-
-
-
 
 
 

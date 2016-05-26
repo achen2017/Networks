@@ -28,17 +28,19 @@ def word_counter(article_dump):
         counted_words = Counter(all_words)
     return(counted_words)
 
-def packager(complete_array, subject, date, the_time, counter):
+def packager(complete_array, query_id, subject, date, the_time, counter):
     conn = lite.connect("/Users/abrahamchen/Documents/NETWORKS/ind_study_code/base_2/db/development.sqlite3")
     cursor = conn.cursor()
     # cursor.execute("INSERT INTO queries VALUES (?, ?, ?, ?, ?, ?);", (1, 'subject', 'subject', 'subject', date, the_time))
-    
-    for item in complete_array:
 
-        cursor.execute("INSERT INTO queries VALUES (?, ?, ?, ?, ?, ?);", (counter, subject, item[0], item[4], date, the_time))
+    for item in complete_array:
+        ### I have yet to get freq working. Don't know how to call it here effectively #change
+        ### Not really sure how to deal with updated_at #change
+        cursor.execute("INSERT INTO data VALUES (?, ?, ?, ?, ?, ?, ?, ?);", (counter, query_id, item[4], item[0], 1, item[1], the_time, the_time))
         conn.commit()
         counter += 1
-
+### complete_array's elements look like this:
+### ['14:4', '0.00643449', '"0.0"', 417, 'said']
 
 
 def main():
@@ -46,6 +48,7 @@ def main():
     # subject = input("what do you want to look up? ")
     subject = str(sys.argv[1])
     counter = int(sys.argv[2])+1
+    query_id = int(sys.argv[3])
     date = time.strftime("%d_%m_%Y")
     the_time = time.strftime("%H_%M_%S")
     article_content = open(subject + '_on_' + date + '_at_' + the_time + '.json', 'w')
@@ -79,7 +82,8 @@ def main():
     json.dump(article_dump, article_content, indent=4)
 
     complete_array = network_main(subject, article_dump)
-    packager(complete_array, subject, date, the_time, counter)
+
+    packager(complete_array, query_id, subject, date, the_time, counter)
 
 
 

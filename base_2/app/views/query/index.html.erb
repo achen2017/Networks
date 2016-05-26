@@ -4,6 +4,7 @@
 </div>
 
 <form class="form-horizontal" action="http://localhost:3000/start_query">
+
   <!-- Label and input for title -->
   <div class="form-group">
     <label for="query" class="col-sm-2 control-label">
@@ -19,9 +20,15 @@
 
 </form>
 
-
-<b>Query Page <%= @latest_id.class %></b>
+<b>Queries</b>
 <br>
 <% @queries.each do |query| %>
-<p><%= query.info %> <%= query.description %></p>
+<p><%= query.query %> </p>
+  <% end %>
+<br>
+<br>
+<b>Datum</b>
+<br>
+<% @data.each do |datum| %>
+<p><%= datum.word %> <%= datum.module %></p>
   <% end %>

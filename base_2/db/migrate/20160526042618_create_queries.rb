@@ -1,11 +1,8 @@
 class CreateQueries < ActiveRecord::Migration
   def change
     create_table :queries do |t|
-      t.string :name
-      t.text :description
-      t.text :info
-      t.datetime :created_at
-      t.datetime :updated_at
+      t.string :query
+
 
       t.timestamps null: false
     end
