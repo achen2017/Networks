@@ -32,7 +32,6 @@ def packager(complete_array, subject, date, the_time, counter):
     conn = lite.connect("/Users/abrahamchen/Documents/NETWORKS/ind_study_code/base_2/db/development.sqlite3")
     cursor = conn.cursor()
     # cursor.execute("INSERT INTO queries VALUES (?, ?, ?, ?, ?, ?);", (1, 'subject', 'subject', 'subject', date, the_time))
-    
     for item in complete_array:
 
         cursor.execute("INSERT INTO queries VALUES (?, ?, ?, ?, ?, ?);", (counter, subject, item[0], item[4], date, the_time))
@@ -80,7 +79,7 @@ def main():
 
     complete_array = network_main(subject, article_dump)
     packager(complete_array, subject, date, the_time, counter)
-
+    print(word_counter(article_dump))
 
 
 

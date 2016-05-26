@@ -180,13 +180,6 @@ def abc(query_subject):
 
 
 
-
-
-
-
-
-
-
 def get_content_cnn(article_request):
     article_text=''
     article_soup = BeautifulSoup(article_request.text,'html.parser')

@@ -14,6 +14,21 @@ import shutil
 
 base_dir = '/Users/abrahamchen/Documents/NETWORKS/ind_study_code/base_2/'
 
+
+json1_file = open('/Users/abrahamchen/Documents/NETWORKS/ind_study_code/Tests/trump_on_24_05_2016_at_19_28_21.json')
+
+
+# article_dump = json1_file.read()
+json1_str = json1_file.read()
+
+# json1_data = json.loads(json1_str)[0]
+article_dump  = json.loads(json1_str)[0]
+# article_dump = json1_data['datapoints']
+
+
+
+
+
 #makes a new folder
 def makemydir():
   try:
@@ -22,8 +37,6 @@ def makemydir():
     pass
 
 class Big:
-
-
     def unique_words(self, article_dump, numb_most):
     # In this method, we're creating a list of unique words. Based off of words that are most frequently used in the corpus.
     # limiting to most common words may not be necessary given the limits of the corpus (just the lede)
@@ -32,10 +45,8 @@ class Big:
             for eachword in item['Text']:
                 all_words.append(eachword)
 
-        # self.counted_words = Counter(all_words)
         counted_words = Counter(all_words)
 
-        # common_words = self.counted_words.most_common(numb_most)
         common_words = counted_words.most_common(numb_most)
 
         self.wlist = []
@@ -43,7 +54,6 @@ class Big:
             self.wlist.append(item[0])   #wlist is a list of top numb_most most frequently used words in all the articles
 
         self.zero_matrix = np.zeros((numb_most, numb_most))  # this Zero_matrix is one way of writing the edgelist. It's a giant two dimensional matrix where each side is a word and the weights linking two words is written into the entries
-        # return(self.counted_words)
 
 
     def network_links(self, article_dump):
@@ -162,11 +172,10 @@ class Big:
         myfile.close
 
 
-
-def network_main(subject, article_dump):
+def main(article_dump):
     # data_json = "vr.json"
 
-    file_name = subject  # this is future file name
+    file_name = 'trump'  # this is future file name
     numb_most = 500   #sets how many words go into the network. It can definitely handle 500
 
     # infomap_command = "../packages/Infomap/Infomap temporary_folder/another_test.net temporary_folder/ -N 10 --tree --bftree" ### #change we have to change the paths used here
@@ -186,16 +195,13 @@ def network_main(subject, article_dump):
     b = Big()
 
     ##list of functions that do stuff
-    # b.counted_words = b.unique_words(article_dump, numb_most)
     b.unique_words(article_dump, numb_most)
     b.network_links(article_dump)
 
     b.grapher(infomap_command, file_name)
     b.tree_to_array(file_name)
     b.completer(file_name)
-
-
-
+    print('blah')
     return(b.complete_array)
     ### Unused functions
     # b.cleaner()
