@@ -14,12 +14,12 @@
 ActiveRecord::Schema.define(version: 20160526042618) do
 
   create_table "data", force: :cascade do |t|
-    #counter
-    t.integer  "query_id"
-    t.string   "word"
-    t.string   "module"
-    t.integer  "freq"
-    t.decimal  "flow"
+    #counter                 #0
+    t.integer  "query_id"    #1
+    t.string   "word"        #2
+    t.string   "module"      #3
+    t.integer  "freq"        #4
+    t.decimal  "flow"        #5
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

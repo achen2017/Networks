@@ -5,6 +5,18 @@ class QueryController < ApplicationController
     # @latest_id = Query.order(:created_at desc, :limit => 1)
     # @latest_id = Query.find(:order => "created_at", :limit => 1)
 
+
+    # You need to recreate the data array
+    @modules = []
+    @data.each do |line|
+
+        big_module = line['module'].split(":")[0]
+        if @modules.include?(big_module) != TRUE
+          @modules << big_module
+        end
+    end
+
+
   end
   def show
     # @query = Query.find(params[:id])

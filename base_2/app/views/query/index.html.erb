@@ -13,22 +13,40 @@
     <div class="col-sm-10">
       <input type="text" id="query" name="query" placeholder="Query" class="form-control">
     </div>
-
-
   </div>
-
-
 </form>
 
-<b>Queries</b>
-<br>
-<% @queries.each do |query| %>
-<p><%= query.query %> </p>
-  <% end %>
-<br>
-<br>
-<b>Datum</b>
-<br>
-<% @data.each do |datum| %>
-<p><%= datum.word %> <%= datum.module %></p>
-  <% end %>
+<div class="page-header">
+
+    <h3>The Results</h3>
+</div>
+
+
+<link rel="stylesheet" href="/bootstrap-horizon.css">
+
+<div class="row row-horizon">
+  <% @modules.each do |mod| %>
+  <div class="col-md-3">
+      <h1>Module <%= mod %></h1>
+    <div class="panel panel-default">
+
+
+      <div class="panel-body">
+
+        <% @data.each do |datum| %>
+          <% if datum['module'].split(":")[0] == mod  %>
+            <div class="panel panel-default">
+              <div class="panel=body">
+                <p><%= datum.word %></p>
+              </div>
+
+            </div>
+          <% end %>
+
+        <% end %>
+      </div>
+
+    </div>
+  </div>
+  <% end  %>
+</div>
