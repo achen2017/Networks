@@ -1,7 +1,20 @@
 class QueryController < ApplicationController
   def index
     @queries = Query.all
-    @data = Datum.all
+    # @data = Datum.all
+    @run_spin = TRUE
+
+
+    if Datum.maximum(:id).class == NilClass
+      @data = Datum.all
+      @query = FALSE
+    else
+      @data = Datum.where(:query_id => Datum.maximum(:query_id))
+      @query = Query.find(Datum.maximum(:query_id))
+
+    end
+
+    # @data = Datum.where(:id => Datum.maximum(:id))
     # @latest_id = Query.order(:created_at desc, :limit => 1)
     # @latest_id = Query.find(:order => "created_at", :limit => 1)
 
@@ -18,6 +31,9 @@ class QueryController < ApplicationController
 
 
   end
+
+
+
   def show
     # @query = Query.find(params[:id])
   end
@@ -26,7 +42,7 @@ class QueryController < ApplicationController
 
   def create_row
 
-
+    @run_spin = TRUE
     @query = Query.new
     @query.query = params[:query]
     @query.save
@@ -39,6 +55,8 @@ class QueryController < ApplicationController
 
     a = Query.maximum(:id).to_s
     # system('python python_old/web_scraper_5.py ' + params[:query] + " " + @latest_id)
+
+
     system('python python/web_scraper_5.py ' + params[:query] + ' ' + @latest_id + ' ' + a)
     # system('python python/web_scraper_5.py ' + params[:query] + ' 1')
 
