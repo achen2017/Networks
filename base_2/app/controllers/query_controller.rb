@@ -35,8 +35,22 @@ class QueryController < ApplicationController
 
 
   def show
-    # @query = Query.find(params[:id])
+    @query = Query.find(params[:id])
+    @data = Datum.where(:query_id => params[:id])
+
+    @modules = []
+    @data.each do |line|
+
+      big_module = line['module'].split(":")[0]
+      if @modules.include?(big_module) != TRUE
+        @modules << big_module
+      end
+
+    end
   end
+
+
+
   def new_form   ### I might not even need this
   end
 
@@ -64,4 +78,8 @@ class QueryController < ApplicationController
 
     redirect_to("http://localhost:3000/")
   end
+
+
+  # def delete
+  # end
 end

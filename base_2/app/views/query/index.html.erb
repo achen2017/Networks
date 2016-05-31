@@ -1,9 +1,9 @@
 <div class="page-header">
-  <h1 class="col-md-offset-5">Word Herd</h1>
+  <a href="/"><h1 class="col-md-offset-5">Word Herd</h1></a>
 
 </div>
 
-<form class="form-horizontal col-md-offset-3" action="http://localhost:3000/start_query">
+<form id="query_form" class="form-horizontal col-md-offset-3" action="http://localhost:3000/start_query">
 
   <!-- Label and input for title -->
   <div class="form-group">
@@ -16,24 +16,47 @@
     </div>
 
 
-    <button type="submit" id="myButton" data-loading-text="Loading..." class="btn btn-primary" autocomplete="off">
+
+    <button type="submit" id="query_myButton" data-loading-text="Loading..." class="btn btn-primary btn-lg btn-warning" autocomplete="off">
+
+
     Launch Query
 
 
   </button>
-  <% if @run_spin == TRUE %>
+  <!-- <% if @run_spin == TRUE %>
   <div class="spinner">
   <div class="rect1"></div>
   <div class="rect2"></div>
   <div class="rect3"></div>
   <div class="rect4"></div>
   <div class="rect5"></div>
-  <% end %>
+  <% end %> -->
 </div>
 
 
   </div>
 </form>
+
+
+  <!-- Dropdown button listing past queries -->
+  <div class="btn-group">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Past Queries <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu">
+      <% @queries.each do |old_q| %>
+      <li><a href="/query/<%= old_q.id %>" class="btn btn-primary"><%= old_q.query %> <%= old_q.created_at %></a></li>
+      <% end %>
+    </ul>
+  </div>
+
+  <div id="goatdiv">
+
+  </div>
+
+
+
 
 <div class="page-header">
   <% if @query != FALSE %>
@@ -72,3 +95,12 @@
   </div>
   <% end  %>
 </div>
+
+
+<!-- <script>
+  $('form#query_form').submit(function(){
+    $('button#query_myButton').prepend('<span class="glyphicon glyphicon-refresh spinning"></span>')
+    $('div#goatdiv').prepend('<p>Please be patient...Word Herd is scrapping the webs. In the meantime, check out some awesome videos?!?</p><ul><li><a href="https://www.youtube.com/watch?v=gEaAmUDEiGo">video 1</a></li><li><a href="https://www.youtube.com/watch?v=ELvsokKcydM">video 2</a></li><li><a href="https://www.youtube.com/watch?v=_yaTmPHdZVM">video 3</a></li></ul>')
+  })
+
+</script> -->

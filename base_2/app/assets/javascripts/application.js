@@ -14,6 +14,8 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+$('.dropdown-toggle').dropdown()
+
 $( document ).ready(function() {
 
   // hide spinner
@@ -31,3 +33,13 @@ $( document ).ready(function() {
   });
 
 });
+
+
+
+$('form#query_form').submit(function(){
+  $('button#query_myButton').prepend('<span class="glyphicon glyphicon-refresh spinning"></span>')
+  $('div#goatdiv').prepend('<p>Please be patient...Word Herd is scrapping the webs. In the meantime, check out some awesome videos?!?</p><ul><li><a href="https://www.youtube.com/watch?v=gEaAmUDEiGo">video 1</a></li><li><a href="https://www.youtube.com/watch?v=ELvsokKcydM">video 2</a></li><li><a href="https://www.youtube.com/watch?v=_yaTmPHdZVM">video 3</a></li></ul>')
+})
+
+
+$('h1').hide();
