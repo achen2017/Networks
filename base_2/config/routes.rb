@@ -5,4 +5,6 @@ Rails.application.routes.draw do
 
   get "/query/:id", :controller => "query", :action => "show"
   get "/delete_query/:id", :controller => "query", :action => "destroy"
+
+  get('/delete_newest', { :controller => 'query', :action => 'destroy_newest' })
 end
